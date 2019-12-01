@@ -21,9 +21,8 @@ object HugeFile extends IOApp {
     }
 
 
-
   override def run(args: List[String]): IO[ExitCode] = {
-    val timeStart = System.currentTimeMillis()
+    val startTime = System.currentTimeMillis()
     source
       .through(text.utf8Decode)
       .through(text.lines)
@@ -31,7 +30,7 @@ object HugeFile extends IOApp {
       .showLinesStdOut
       .compile
       .drain
-      .guarantee(IO(println(s"Time taken: ${(System.currentTimeMillis() - timeStart)/1000 seconds}")))
+      .guarantee(IO(println(s"Time taken: ${(System.currentTimeMillis() - startTime) / 1000 seconds}")))
       .as(ExitCode.Success)
   }
 }
